@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+// What an agent running in pitwall tells the app about its task: `pitwall help` lists what it can say.
+// The app puts this directory first in the agent's PATH and gives it PITWALL_AGENT_URL and PITWALL_AGENT_TOKEN.
+const [name = "help", ...words] = process.argv.slice(2);
+const { PITWALL_AGENT_URL: url, PITWALL_AGENT_TOKEN: token } = process.env;
+if (!url || !token) {
+  console.error("pitwall: not started by pitwall (PITWALL_AGENT_URL and PITWALL_AGENT_TOKEN are not set)");
+  process.exit(2);
+}
+
+// The text comes from the arguments, or from stdin when there are none: `pitwall spec < spec.md`.
+let text = words.join(" ");
+if (!text && !process.stdin.isTTY && name !== "help") {
+  for await (const chunk of process.stdin) text += chunk;
+}
+
+try {
+  const res = await fetch(`${url}/api/agent/signal`, {
+    method: "POST",
+    headers: { authorization: `Agent ${token}`, "content-type": "application/json" },
+    body: JSON.stringify({ name, text: text.trim() }),
+  });
+  const reply = await res.text();
+  (res.ok ? process.stdout : process.stderr).write(reply);
+  process.exit(res.ok ? 0 : 1);
+} catch (error) {
+  console.error(`pitwall: the app is not reachable at ${url}: ${error.message}`);
+  process.exit(1);
+}

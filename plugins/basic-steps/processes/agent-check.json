@@ -1,0 +1,46 @@
+{
+  "id": "agent-check",
+  "label": "Agent and my check",
+  "description": "You describe the task, the agent does it, you check: done, or once more.",
+  "icon": "bot",
+  "template": true,
+  "nodes": {
+    "describe": "basic-steps.describe",
+    "work": {
+      "step": "basic-steps.agent-task",
+      "status": "in_progress"
+    },
+    "check": {
+      "step": "basic-steps.ask",
+      "status": "in_progress",
+      "params": {
+        "question": "Is it done?",
+        "options": "Done\nOnce more"
+      }
+    }
+  },
+  "edges": [
+    [
+      "start",
+      "describe"
+    ],
+    [
+      "describe",
+      "work"
+    ],
+    [
+      "work",
+      "check"
+    ],
+    [
+      "check",
+      {
+        "on": "choice.answer",
+        "cases": {
+          "Done": "end"
+        },
+        "else": "work"
+      }
+    ]
+  ]
+}

@@ -1,0 +1,59 @@
+# Every installer is tested on the system it is written for.
+name: Installers
+
+on:
+  push:
+    paths: [installer/**, run.sh, .github/**]
+  pull_request:
+    paths: [installer/**, run.sh, .github/**]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: shellcheck run.sh installer/*.sh installer/tests/*.sh installer/tests/stub/gh .github/adopt.sh .github/tests/*.sh
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fork, clone, turn on issues, start
+        run: installer/tests/installer-smoke.sh installer/install-linux.sh
+      - name: Download and verify GitHub CLI
+        run: installer/tests/install-gh.sh installer/install-linux.sh
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fork, clone, turn on issues, start
+        run: installer/tests/installer-smoke.sh installer/install-macos.sh
+      - name: Download and verify GitHub CLI
+        run: installer/tests/install-gh.sh installer/install-macos.sh
+
+  windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        shell: [pwsh, powershell] # PowerShell 7 and Windows PowerShell 5.1
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: PSScriptAnalyzer
+        if: matrix.shell == 'pwsh'
+        run: |
+          Install-Module PSScriptAnalyzer -Force -Scope CurrentUser
+          $found = Invoke-ScriptAnalyzer -Path installer -Recurse `
+            -ExcludeRule PSAvoidUsingWriteHost, PSUseShouldProcessForStateChangingFunctions, PSAvoidUsingInvokeExpression
+          $found | Format-Table -AutoSize
+          if ($found) { exit 1 }
+      - name: Fork, clone, turn on issues, start
+        run: ./installer/tests/installer-smoke.ps1 installer/install-windows.ps1

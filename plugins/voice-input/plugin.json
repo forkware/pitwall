@@ -1,0 +1,5 @@
+{
+  "name": "Voice input",
+  "description": "A microphone in multiline text fields: the browser's speech recognition, macOS dictation, or Whisper on this machine.",
+  "permissions": {}
+}

@@ -1,0 +1,5 @@
+{
+  "name": "Search",
+  "description": "Ctrl+K finds tasks, folders and commands; a page shows all results with filters, the archive and the agents' conversations too.",
+  "permissions": {}
+}

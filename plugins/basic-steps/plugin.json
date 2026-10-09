@@ -1,0 +1,9 @@
+{
+  "name": "Basic steps",
+  "description": "Steps anyone can build a process from: ask for the task, ask me a question, a task for the agent, an agent answers or decides, run a command. Templates to start from.",
+  "permissions": {
+    "steps:register": "Adds the steps.",
+    "processes:run": "Lets the process go on when the agent says it finished its task.",
+    "agents:spawn": "Gives the folder's agent its task, and asks an agent for an answer."
+  }
+}

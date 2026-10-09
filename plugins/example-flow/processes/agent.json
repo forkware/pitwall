@@ -1,0 +1,32 @@
+{
+  "id": "agent",
+  "label": "Agent task",
+  "description": "Asks for the task and gives it to the folder's agent; you say when it is done.",
+  "icon": "bot",
+  "nodes": {
+    "describe": "example-flow.describe",
+    "work": {
+      "step": "example-flow.agent",
+      "status": "in_progress"
+    },
+    "review": "example-flow.review"
+  },
+  "edges": [
+    [
+      "start",
+      "describe"
+    ],
+    [
+      "describe",
+      "work"
+    ],
+    [
+      "work",
+      "review"
+    ],
+    [
+      "review",
+      "end"
+    ]
+  ]
+}

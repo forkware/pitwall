@@ -1,0 +1,13 @@
+{
+  "name": "Development process",
+  "description": "A task from your words: an agent names it, works in a git worktree from dev until the tests pass, you try it on a dev stand, and it is merged into dev, one task at a time.",
+  "permissions": {
+    "statuses:register": "Adds Testing, Review, Merging and In dev.",
+    "steps:register": "Adds the steps of the development process.",
+    "processes:register": "Adds the Development process.",
+    "processes:run": "Continues a task's process when its agent says it is done and when dev is free again.",
+    "tasks:write": "Names the task, keeps its refined description and points its agents at the worktree.",
+    "agents:spawn": "Runs the agent that names the task and the one that does the work, sends it test failures and your comments, and ends it before its worktree is removed.",
+    "workspaces:resolve": "Restores a task's worktree, removed after the merge, when you continue its agent."
+  }
+}

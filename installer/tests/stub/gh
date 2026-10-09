@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Fake GitHub CLI for installer tests: logs every call and fakes only what the installers use.
+echo "$*" >> "$GH_STUB_LOG"
+case "$1 $2" in
+  "auth status" | "auth setup-git" | "repo edit") ;;
+  "repo fork")
+    name=${3#*/}
+    git init -q "$name"
+    git -C "$name" remote add origin "https://github.com/tester/$name.git"
+    ;;
+  *) echo "gh stub: unexpected call: gh $*" >&2; exit 1 ;;
+esac

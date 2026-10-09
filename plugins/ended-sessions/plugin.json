@@ -1,0 +1,7 @@
+{
+  "name": "Ended agents",
+  "description": "Over an agent that ended: why it ended, and a button that continues its conversation in the same tab, or starts a new agent.",
+  "permissions": {
+    "agents:spawn": "Continues an ended agent in its tab, or starts a new one with the task's description, when you press the button."
+  }
+}

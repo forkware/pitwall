@@ -1,0 +1,8 @@
+{
+  "name": "Steps in words",
+  "description": "Steps you make in words for the process editor: a task for an agent, kept as a Markdown file in plugins/my-processes/steps.",
+  "permissions": {
+    "steps:register": "Adds each step you make in words, and the stand-in for a step an agent is still making.",
+    "agents:spawn": "Runs the agent of a step, and of \"Try it on a task\"."
+  }
+}

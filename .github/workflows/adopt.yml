@@ -1,0 +1,50 @@
+# In a repository created from the Forkware template, points the installers at the new
+# repository, writes its README and opens an issue with the decisions left to its author.
+# Runs again after a rename. In the template itself and in forks of an app it does nothing.
+name: Adopt
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  adopt:
+    if: ${{ !github.event.repository.fork && github.ref_name == github.event.repository.default_branch }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: adopt
+        run: .github/adopt.sh "$GITHUB_REPOSITORY"
+
+      - if: steps.adopt.outputs.changed == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m "Point installers at $GITHUB_REPOSITORY"
+          git push
+
+      - if: steps.adopt.outputs.first == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "Set up ${GITHUB_REPOSITORY#*/}" --body-file - <<'EOF'
+          Created from the [Forkware template](https://github.com/forkware/manifesto). The installers already fork this repository. What is left only you can decide:
+
+          - [ ] **License.** `LICENSE` is CC0 from the template, so right now anyone may use this code without conditions. Replace it if you want other terms, but keep the right to fork and change the code, or the manifesto does not work.
+          - [ ] **Start command.** `run.sh` and `run.cmd` open an AI agent to build the app with you. Once the app runs, make them start it: the installer runs them right after cloning.
+          - [ ] **Description.** Say what the app does in `README.md` and in the repository's About.
+          EOF
+
+  # Checks adopt.sh on a copy, so a broken one never reaches a new app
+  test:
+    if: ${{ github.repository == 'forkware/manifesto' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: .github/tests/adopt-test.sh

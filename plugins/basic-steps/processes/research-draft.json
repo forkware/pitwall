@@ -1,0 +1,68 @@
+{
+  "id": "research-draft",
+  "label": "Research, draft, my edit",
+  "description": "An agent gathers material on the topic, another writes a draft from it, you read it: done, or fix it.",
+  "icon": "pen-line",
+  "template": true,
+  "nodes": {
+    "describe": {
+      "step": "basic-steps.describe",
+      "params": {
+        "question": "What is the topic?"
+      }
+    },
+    "research": {
+      "step": "basic-steps.agent-answer",
+      "status": "in_progress",
+      "label": "The agent gathers material",
+      "params": {
+        "prompt": "Gather material on this topic: what is known, the main sources, facts to check.\n\n{{task.title}}\n\n{{task.body}}"
+      }
+    },
+    "draft": {
+      "step": "basic-steps.agent-task",
+      "status": "in_progress",
+      "label": "The agent writes a draft",
+      "params": {
+        "prompt": "Write a draft on this topic from the material below, in drafts/.\n\nTopic: {{task.title}}\n\n{{agent.answer}}"
+      }
+    },
+    "check": {
+      "step": "basic-steps.ask",
+      "status": "in_progress",
+      "label": "I read the draft",
+      "params": {
+        "question": "Is the draft ready?",
+        "options": "Ready\nFix it"
+      }
+    }
+  },
+  "edges": [
+    [
+      "start",
+      "describe"
+    ],
+    [
+      "describe",
+      "research"
+    ],
+    [
+      "research",
+      "draft"
+    ],
+    [
+      "draft",
+      "check"
+    ],
+    [
+      "check",
+      {
+        "on": "choice.answer",
+        "cases": {
+          "Ready": "end"
+        },
+        "else": "draft"
+      }
+    ]
+  ]
+}

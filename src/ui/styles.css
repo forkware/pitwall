@@ -1,0 +1,119 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+@import "@xterm/xterm/css/xterm.css";
+
+/* Plugins live outside src/ui; let Tailwind see their classes too. */
+@source "../../plugins";
+
+/* Design tokens. Plugins use these through Tailwind classes (bg-panel, text-muted, ...). */
+:root {
+  --bg: #fafafb;
+  --panel: #ffffff;
+  --raised: #f3f4f6;
+  --hover: #eceef2;
+  --line: #e4e6eb;
+  --text: #17181c;
+  --muted: #5d636e;
+  --faint: #969ba5;
+  --accent: #5b4cf0;
+  --accent-2: #9d4cf0;
+  --accent-text: #ffffff;
+  --danger: #d63c3c;
+  --s-gray: #8b919c;
+  --s-blue: #3f84f2;
+  --s-amber: #d9930d;
+  --s-green: #2da44e;
+  --s-red: #d63c3c;
+  --s-violet: #8a5cf0;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b0c0f;
+    --panel: #111317;
+    --raised: #181b20;
+    --hover: #1e2128;
+    --line: #23262d;
+    --text: #e7e9ee;
+    --muted: #9198a3;
+    --faint: #5f6570;
+    --accent: #7d6bff;
+    --accent-2: #b36bff;
+    --danger: #f2615a;
+    --s-gray: #8b919c;
+    --s-blue: #5b9dff;
+    --s-amber: #f0b429;
+    --s-green: #3fb950;
+    --s-red: #f2615a;
+    --s-violet: #a98bff;
+    color-scheme: dark;
+  }
+}
+
+@theme {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-raised: var(--raised);
+  --color-hover: var(--hover);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-text: var(--accent-text);
+  --color-danger: var(--danger);
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+  --animate-pulse-dot: pulse-dot 1.6s ease-in-out infinite;
+  --animate-toast-in: toast-in 160ms ease-out;
+}
+
+@keyframes pulse-dot {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11", "ss01";
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.xterm {
+  padding: 12px 0 0 16px;
+  height: 100%;
+}
+
+.xterm-viewport {
+  background: transparent !important;
+}

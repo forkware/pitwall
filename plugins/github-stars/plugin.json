@@ -1,0 +1,5 @@
+{
+  "name": "GitHub stars",
+  "description": "A badge next to \"Customize the app\" with the star count of the app's repository on GitHub; it opens the repository.",
+  "permissions": {}
+}

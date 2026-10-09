@@ -1,0 +1,21 @@
+name: Installer problem
+description: The installer failed or did something unexpected.
+labels: [installer]
+body:
+  - type: dropdown
+    attributes:
+      label: System
+      options: [Linux, macOS, Windows]
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: OS version and architecture
+      placeholder: e.g. Ubuntu 24.04 x86_64
+  - type: textarea
+    attributes:
+      label: What happened
+      description: Paste the installer output.
+      render: text
+    validations:
+      required: true

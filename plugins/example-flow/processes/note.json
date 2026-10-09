@@ -1,0 +1,21 @@
+{
+  "id": "note",
+  "label": "Quick note",
+  "description": "A task named after the time, with no questions: write in its body later.",
+  "icon": "notebook-pen",
+  "hotkey": "Alt+N",
+  "nodes": {
+    "note": "example-flow.note"
+  },
+  "edges": [
+    [
+      "start",
+      "note"
+    ],
+    [
+      "note",
+      "end"
+    ]
+  ],
+  "doneStatus": "todo"
+}

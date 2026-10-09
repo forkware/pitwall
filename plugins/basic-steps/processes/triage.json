@@ -1,0 +1,65 @@
+{
+  "id": "triage",
+  "label": "Sort what comes in",
+  "description": "For automations: an agent decides what came in (a bug, a question or else), an agent fixes a bug, anything else waits for you.",
+  "icon": "inbox",
+  "template": true,
+  "nodes": {
+    "describe": "basic-steps.describe",
+    "sort": {
+      "step": "basic-steps.agent-answer",
+      "label": "The agent sorts it",
+      "params": {
+        "prompt": "What is this: a bug, a question, or something else?\n\n{{task.title}}\n\n{{task.body}}",
+        "options": "bug\nquestion\nother"
+      }
+    },
+    "fix": {
+      "step": "basic-steps.agent-task",
+      "status": "in_progress",
+      "label": "The agent fixes the bug"
+    },
+    "look": {
+      "step": "basic-steps.ask",
+      "label": "I look at it",
+      "params": {
+        "question": "What to do with it?",
+        "options": "Done\nGive it to the agent"
+      }
+    }
+  },
+  "edges": [
+    [
+      "start",
+      "describe"
+    ],
+    [
+      "describe",
+      "sort"
+    ],
+    [
+      "sort",
+      {
+        "on": "agent.choice",
+        "cases": {
+          "bug": "fix"
+        },
+        "else": "look"
+      }
+    ],
+    [
+      "fix",
+      "end"
+    ],
+    [
+      "look",
+      {
+        "on": "choice.answer",
+        "cases": {
+          "Give it to the agent": "fix"
+        },
+        "else": "end"
+      }
+    ]
+  ]
+}

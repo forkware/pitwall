@@ -1,0 +1,8 @@
+{
+  "name": "Local directory",
+  "description": "Binds a folder to a directory on disk; agents for its tasks start there.",
+  "permissions": {
+    "folders:write": "Stores the bound directory in the folder.",
+    "workspaces:resolve": "Starts agents in the directory of the task's folder."
+  }
+}

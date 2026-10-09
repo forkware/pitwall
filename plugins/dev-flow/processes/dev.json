@@ -1,0 +1,133 @@
+{
+  "id": "dev",
+  "label": "Development",
+  "description": "Your words → an agent names the task, asks what is unclear and works in a git worktree from dev until the tests pass → you try it on a dev stand → merged into dev.",
+  "icon": "git-branch",
+  "nodes": {
+    "describe": "dev-flow.describe",
+    "refine": {
+      "step": "dev-flow.refine",
+      "status": "in_progress"
+    },
+    "clarify": {
+      "step": "dev-flow.clarify",
+      "status": "in_progress"
+    },
+    "workspace": {
+      "step": "dev-flow.workspace",
+      "status": "in_progress"
+    },
+    "code": {
+      "step": "dev-flow.code",
+      "status": "in_progress"
+    },
+    "wait": {
+      "step": "dev-flow.wait",
+      "status": "in_progress"
+    },
+    "test": {
+      "step": "dev-flow.test",
+      "status": "testing"
+    },
+    "manual": {
+      "step": "dev-flow.manual",
+      "status": "review"
+    },
+    "stand": {
+      "step": "dev-flow.stand",
+      "status": "review"
+    },
+    "merge": {
+      "step": "dev-flow.merge",
+      "status": "merging"
+    },
+    "test-dev": {
+      "step": "dev-flow.test-dev",
+      "status": "merging"
+    }
+  },
+  "edges": [
+    [
+      "start",
+      "describe"
+    ],
+    [
+      "describe",
+      "refine"
+    ],
+    [
+      "refine",
+      "clarify"
+    ],
+    [
+      "clarify",
+      "workspace"
+    ],
+    [
+      "workspace",
+      "code"
+    ],
+    [
+      "code",
+      "wait"
+    ],
+    [
+      "wait",
+      "test"
+    ],
+    [
+      "test",
+      {
+        "on": "dev.passed",
+        "cases": {
+          "true": "manual"
+        },
+        "else": "code"
+      }
+    ],
+    [
+      "manual",
+      {
+        "on": "dev.decision",
+        "cases": {
+          "stand": "stand",
+          "ready": "merge"
+        },
+        "else": "code"
+      }
+    ],
+    [
+      "stand",
+      {
+        "on": "dev.decision",
+        "cases": {
+          "retry": "stand",
+          "ready": "merge"
+        },
+        "else": "code"
+      }
+    ],
+    [
+      "merge",
+      {
+        "on": "dev.mergeResult",
+        "cases": {
+          "merged": "test-dev",
+          "conflict": "code"
+        },
+        "else": "end"
+      }
+    ],
+    [
+      "test-dev",
+      {
+        "on": "dev.devPassed",
+        "cases": {
+          "true": "end"
+        },
+        "else": "code"
+      }
+    ]
+  ],
+  "doneStatus": "in_dev"
+}

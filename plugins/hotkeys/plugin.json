@@ -1,0 +1,5 @@
+{
+  "name": "Hotkeys",
+  "description": "F2 renames; Delete sends the task to the archive (Ctrl+Z takes it back), Shift+Delete deletes it for good; Delete on a folder asks first.",
+  "permissions": {}
+}

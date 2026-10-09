@@ -1,0 +1,33 @@
+# Rule 5: tests are the contract, and CI runs in every fork.
+name: App
+
+on:
+  push:
+    paths-ignore: [installer/**, "**.md"]
+  pull_request:
+    paths-ignore: [installer/**, "**.md"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4 # the version from packageManager in package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: "1"
+      - run: pnpm run check
+      - run: pnpm test
+      - run: pnpm run build

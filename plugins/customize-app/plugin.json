@@ -1,0 +1,10 @@
+{
+  "name": "Customize the app",
+  "description": "A button that starts an agent on this app's own source code, so the app changes the way you want.",
+  "permissions": {
+    "folders:write": "Creates the folder named after the app, once.",
+    "tasks:write": "Creates a task for each customization.",
+    "agents:spawn": "Starts the agent that makes the change.",
+    "workspaces:resolve": "Runs agents for that folder in the app's source directory."
+  }
+}

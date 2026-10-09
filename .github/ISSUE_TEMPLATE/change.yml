@@ -1,0 +1,22 @@
+# Rule 2 of the manifesto: every change starts with an issue, written in plain language.
+name: Change
+description: Describe something that should work differently.
+labels: [change]
+body:
+  - type: checkboxes
+    attributes:
+      label: Already solved?
+      description: First check whether someone has already asked for this or solved it.
+      options:
+        - label: I searched open and closed issues and found nothing similar.
+          required: true
+  - type: textarea
+    attributes:
+      label: Intent
+      description: What should change and why. Plain language is enough; the agent turns it into a recipe.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: How to tell it works
+      description: What you would check by hand. These become the recipe's tests.

@@ -1,0 +1,7 @@
+{
+  "name": "Codex",
+  "description": "Runs the codex CLI with the user's own ChatGPT subscription or API key.",
+  "permissions": {
+    "agents:provide": "Adds Codex to the agents a task can start."
+  }
+}

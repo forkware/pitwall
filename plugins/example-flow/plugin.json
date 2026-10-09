@@ -1,0 +1,9 @@
+{
+  "name": "Example processes",
+  "description": "Two small processes to try folder task buttons with: a task for an agent and a quick note.",
+  "permissions": {
+    "steps:register": "Adds the steps the example processes are made of.",
+    "processes:register": "Adds Agent task and Quick note.",
+    "agents:spawn": "Agent task starts the folder's agent on the task's description."
+  }
+}

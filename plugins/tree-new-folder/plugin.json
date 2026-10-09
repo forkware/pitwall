@@ -1,0 +1,5 @@
+{
+  "name": "New folder from the tree",
+  "description": "A right click on the tree's empty space offers to create a folder.",
+  "permissions": {}
+}

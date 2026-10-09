@@ -1,0 +1,7 @@
+{
+  "name": "Claude Code",
+  "description": "Runs the claude CLI with the user's own subscription and login.",
+  "permissions": {
+    "agents:provide": "Adds Claude Code to the agents a task can start."
+  }
+}

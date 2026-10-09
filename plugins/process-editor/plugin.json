@@ -1,0 +1,10 @@
+{
+  "name": "Process editor",
+  "description": "A catalog of processes (processes) with their recipes: read, change by hand or in words, build your own, try them, run them by hand and from automations.",
+  "permissions": {
+    "processes:register": "Saves the processes you make and your own versions of plugins' processes as files in plugins/my-processes.",
+    "processes:run": "Moves a task to the new version of its process when you ask, and runs trials of a process.",
+    "agents:spawn": "Runs the agent that changes a process when you say what to change.",
+    "tasks:write": "Makes the tasks of trial runs and deletes them after a day, unless you keep them."
+  }
+}

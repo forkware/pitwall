@@ -1,0 +1,5 @@
+{
+  "name": "Right-click paste",
+  "description": "Right-clicking an agent terminal pastes the text from the clipboard.",
+  "permissions": {}
+}
